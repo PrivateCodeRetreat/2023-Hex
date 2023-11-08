@@ -5,37 +5,48 @@ import {verify, verifyAsJson} from "approvals/lib/Providers/Jest/JestApprovals";
 
 class GameOfLifeBoard {
 
-    printHexBoard(height: number, width: number): string {
-        if (height < 2 || width < 2) {
-            return "The height and width must be at least 2.";
+    printHexBoard(width: number, height: number): string {
+            // The pieces that make up each hex cell
+            const flatTop = ' __ ';
+            const topLeft = '/  \\';
+            const bottomLeft = '\\__/';
+
+            // The output grid string
+            let grid = '';
+
+            // Create the top part of the grid
+            for (let row = 0; row < height; row++) {
+                let topLine = '';
+                let bottomLine = '';
+
+                // Create the offset for the grid
+                if (row % 2 !== 0) {
+                    topLine += ' ';
+                    bottomLine += ' ';
+                }
+
+                // Create each cell in the row
+                for (let col = 0; col < width; col++) {
+                    topLine += flatTop;
+                    bottomLine += topLeft + bottomLeft;
+                }
+
+                // Remove the last bottomLeft from the bottomLine string
+                bottomLine = bottomLine.substring(0, bottomLine.length - bottomLeft.length);
+
+                // Add the completed lines to the grid
+                grid += topLine + '\n' + bottomLine + '\n';
+            }
+
+            // Remove the last newline character from the grid string
+            grid = grid.substring(0, grid.length - 1);
+
+            return grid;
         }
 
-        // Initialize an empty string to store the hexagonal board
-        let hexagonalBoard = '';
-
-        // Calculate the maximum row width
-        const maxRowWidth = width + 2 * (height - 1);
-
-        for (let i = 0; i < height; i++) {
-            // Calculate leading spaces, hexagon symbols, and trailing spaces for each row
-            const leadingSpaces = Math.abs(height - i - 1);
-            const hexagonSymbols = width + 2 * i;
-            const trailingSpaces = maxRowWidth - leadingSpaces - hexagonSymbols;
-
-            // Create the row content
-            let row = " ".repeat(leadingSpaces);
-            row += "o".repeat(hexagonSymbols);
-            row += " ".repeat(trailingSpaces);
-
-            // Append the row to the hexagonal board string
-            hexagonalBoard += row + '\n';
-        }
-
-        return hexagonalBoard;
-    }
 
     toString() {
-        return this.printHexBoard(10, 10);
+        return this.printHexBoard(2, 3);
     }
 }
 
