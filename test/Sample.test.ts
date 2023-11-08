@@ -28,7 +28,7 @@ class GameOfLifeBoard {
     }
 
     toString() {
-        return this.printHexBoard(2, 3);
+        return this.printHexBoard(5, 10);
     }
 }
 
