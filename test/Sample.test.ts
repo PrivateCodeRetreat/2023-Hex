@@ -15,7 +15,7 @@ class GameOfLifeBoard {
 
         grid = this.printColumn(width, grid, " __   ");
         for (let row = 0; row < Math.ceil(height / 2); row++) {
-            grid = this.printTop(width, grid, (row+1) * 2 - 1);
+            grid = this.printOddRows(width, grid, (row+1) * 2 - 1);
             grid = this.printColumn(width, grid, midRow);
         }
 
@@ -30,7 +30,7 @@ class GameOfLifeBoard {
         return grid.substring(0, grid.length - 2) + "\n";
     }
 
-    private printTop(width: number, grid: string, row: number) {
+    private printOddRows(width: number, grid: string, row: number) {
         const empty = "/  \\__";
         const alive = "/##\\__";
 
@@ -63,6 +63,6 @@ describe("ApprovalTests", () => {
 
     test("Testing coordinates", () => {
 
-        verify(new GameOfLifeBoard([1, 1]));
+        verify(new GameOfLifeBoard([1, 1],[2,2]));
     });
 });
