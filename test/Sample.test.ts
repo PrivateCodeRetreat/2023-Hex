@@ -15,7 +15,7 @@ class GameOfLifeBoard {
 
         grid = this.printColumn(width, grid, " __   ");
         for (let row = 0; row < Math.ceil(height / 2); row++) {
-            grid = this.printTop(width, grid, row * 2 - 1);
+            grid = this.printTop(width, grid, (row+1) * 2 - 1);
             grid = this.printColumn(width, grid, midRow);
         }
 
