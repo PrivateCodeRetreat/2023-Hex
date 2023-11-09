@@ -35,7 +35,7 @@ class GameOfLifeBoard {
         const alive = "/##\\__";
 
         for (let col = 0; col < width; col++) {
-            if (this.isCellAlive([col, 1])) {
+            if (this.isCellAlive([col+1, row])) {
                 grid += alive
             } else {
                 grid += empty;
@@ -50,8 +50,7 @@ class GameOfLifeBoard {
     }
 
     private isCellAlive(cell: [number, number]) {
-        
-        return cell[0] === 1 && cell[1] === 1;
+        return this.cells.toString().includes(cell.toString());
     }
 }
 
