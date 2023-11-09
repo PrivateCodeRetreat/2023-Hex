@@ -35,7 +35,7 @@ class GameOfLifeBoard {
         const alive = "/##\\__";
 
         for (let col = 0; col < width; col++) {
-            if (this.isCellAlive([2, 2])) {
+            if (this.isCellAlive([1, 1])) {
                 grid += alive
             } else {
                 grid += empty;
@@ -50,8 +50,10 @@ class GameOfLifeBoard {
     }
 
     private isCellAlive(cell: [number, number]) {
-        return true;
-        //return this.cells.includes(cell);
+        this.cells.forEach()
+        console.log("HERE:");
+        console.log(cell);
+        return this.cells.includes(cell);
     }
 }
 
@@ -64,6 +66,6 @@ describe("ApprovalTests", () => {
 
     test("Testing coordinates", () => {
 
-        verify(new GameOfLifeBoard([2, 2]));
+        verify(new GameOfLifeBoard([1, 1]));
     });
 });
