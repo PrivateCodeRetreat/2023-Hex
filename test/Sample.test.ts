@@ -10,8 +10,6 @@ class GameOfLifeBoard {
 
     printHexBoard(width: number, height: number): string {
         // The pieces that make up each hex cell
-
-
         let grid = this.printHeader(width);
         for (let row = 0; row < Math.ceil(height / 2); row++) {
             let oddY = (row + 1) * 2 - 1;
@@ -36,7 +34,7 @@ class GameOfLifeBoard {
         const empty = "\\__/  ";
         const alive = "\\__/##";
 
-        for (let x = 1; x <= width; x += 2) {
+        for (let x = 2; x <= width; x += 2) {
             if (this.isCellAlive([x, y])) {
                 console.log(`alive at [${x}, ${y}]`);
                 grid += alive
