@@ -10,12 +10,13 @@ class GameOfLifeBoard {
 
     printHexBoard(width: number, height: number): string {
         // The pieces that make up each hex cell
-        const midRow = "\\__/  ";
+
 
         let grid = this.printHeader(width);
         for (let row = 0; row < Math.ceil(height / 2); row++) {
-            grid = this.printOddRows(width, grid, (row + 1) * 2 - 1);
-            grid = this.printColumn(width, grid, midRow);
+            let oddY = (row + 1) * 2 - 1;
+            grid = this.printOddRows(width, grid, oddY);
+            grid = this.printEvenRows(width, grid, oddY + 1);
         }
 
         return grid;
@@ -31,9 +32,17 @@ class GameOfLifeBoard {
         return grid.substring(0, grid.length - 2) + "\n";
     }
 
-    private printColumn(width: number, grid: string, pattern: string) {
-        for (let col = 0; col < width; col++) {
-            grid += pattern;
+    private printEvenRows(width: number, grid: string, y: number) {
+        const empty = "\\__/  ";
+        const alive = "\\__/##";
+
+        for (let x = 1; x <= width; x += 2) {
+            if (this.isCellAlive([x, y])) {
+                console.log(`alive at [${x}, ${y}]`);
+                grid += alive
+            } else {
+                grid += empty;
+            }
         }
 
         return grid.substring(0, grid.length - 2) + "\n";
