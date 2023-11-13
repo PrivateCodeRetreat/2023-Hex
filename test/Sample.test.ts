@@ -77,6 +77,11 @@ class GameOfLifeBoard {
     private isCellAlive(cell: [number, number]) {
         return this.cells.toString().includes(cell.toString());
     }
+
+    static getNearNeighbors(center: number[]): [number, number][] {
+        let [x, y] = center;
+        return [[x - 1, y - 1], [x, y - 2], [x + 1, y - 1], [x + 1, y + 1], [x, y + 2], [x - 1, y + 1]];
+    }
 }
 
 describe("ApprovalTests", () => {
@@ -95,5 +100,12 @@ describe("ApprovalTests", () => {
     test("Test board with numbers", () => {
 
         verify(new GameOfLifeBoard().printHexBoard(10, 10, true));
+    });
+
+    test("Test near neighbors", () => {
+        const center = [3, 5];
+        const neighbors = GameOfLifeBoard.getNearNeighbors(center); // cells: [number, number][];
+        let board = new GameOfLifeBoard(...neighbors);
+        verify(board);
     });
 });
