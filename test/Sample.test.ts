@@ -12,15 +12,23 @@ class GameOfLifeBoard {
         // The pieces that make up each hex cell
         const midRow = "\\__/  ";
 
-        let grid = '';
-
-        grid = this.printColumn(width, grid, " __   ");
+        let grid = this.printHeader(width);
         for (let row = 0; row < Math.ceil(height / 2); row++) {
             grid = this.printOddRows(width, grid, (row + 1) * 2 - 1);
             grid = this.printColumn(width, grid, midRow);
         }
 
         return grid;
+    }
+
+    private printHeader(width: number) {
+        let grid = '';
+        const header = " __   ";
+        for (let col = 0; col < width / 2; col++) {
+            grid += header;
+        }
+
+        return grid.substring(0, grid.length - 2) + "\n";
     }
 
     private printColumn(width: number, grid: string, pattern: string) {
@@ -30,6 +38,7 @@ class GameOfLifeBoard {
 
         return grid.substring(0, grid.length - 2) + "\n";
     }
+
 
     private printOddRows(width: number, grid: string, y: number) {
         const empty = "/  \\__";
