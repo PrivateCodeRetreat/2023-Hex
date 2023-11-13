@@ -8,13 +8,13 @@ class GameOfLifeBoard {
         this.cells = tuples;
     }
 
-    printHexBoard(width: number, height: number): string {
+    printHexBoard(width: number, height: number, printCoordinates: boolean): string {
         // The pieces that make up each hex cell
         let grid = this.printHeader(width);
         for (let row = 0; row < Math.ceil(height / 2); row++) {
             let oddY = (row + 1) * 2 - 1;
-            grid = this.printOddRows(width, grid, oddY);
-            grid = this.printEvenRows(width, grid, oddY + 1);
+            grid = this.printOddRows(width, grid, oddY, printCoordinates);
+            grid = this.printEvenRows(width, grid, oddY + 1, printCoordinates);
         }
 
         return grid;
@@ -30,7 +30,7 @@ class GameOfLifeBoard {
         return grid.substring(0, grid.length - 2) + "\n";
     }
 
-    private printEvenRows(width: number, grid: string, y: number) {
+    private printEvenRows(width: number, grid: string, y: number, printCoordinates: boolean) {
         const empty = "\\__/  ";
         const alive = "\\__/##";
 
@@ -39,7 +39,11 @@ class GameOfLifeBoard {
                 console.log(`alive at [${x}, ${y}]`);
                 grid += alive
             } else {
-                grid += empty;
+                if (printCoordinates) {
+                    grid += `\\__/${x % 10}${y % 10}`;
+                } else {
+                    grid += empty;
+                }
             }
         }
 
@@ -47,16 +51,19 @@ class GameOfLifeBoard {
     }
 
 
-    private printOddRows(width: number, grid: string, y: number) {
+    private printOddRows(width: number, grid: string, y: number, printCoordinates: boolean) {
         const empty = "/  \\__";
         const alive = "/##\\__";
 
         for (let x = 1; x <= width; x += 2) {
             if (this.isCellAlive([x, y])) {
-                console.log(`alive at [${x}, ${y}]`);
                 grid += alive
             } else {
-                grid += empty;
+                if (printCoordinates) {
+                    grid += `/${x}${y}\\__`;
+                } else {
+                    grid += empty;
+                }
             }
         }
 
@@ -64,7 +71,7 @@ class GameOfLifeBoard {
     }
 
     toString() {
-        return this.printHexBoard(10, 10);
+        return this.printHexBoard(10, 10, false);
     }
 
     private isCellAlive(cell: [number, number]) {
@@ -83,5 +90,10 @@ describe("ApprovalTests", () => {
 
         verify(new GameOfLifeBoard([1, 1], [2, 2], [3, 5], [4, 6]));
         // verify(new GameOfLifeBoard([2, 2], [3, 5], [4, 6]));
+    });
+
+    test("Test board with numbers", () => {
+
+        verify(new GameOfLifeBoard().printHexBoard(10, 10, true));
     });
 });
