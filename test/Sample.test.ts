@@ -91,7 +91,6 @@ class GameOfLifeBoard {
     static getSecondNeighbors(center: number[]):  [number, number][] {
         let [x, y] = center;
         return [[x - 2, y], [x - 1, y - 3], [x + 1, y - 3], [x + 2, y], [x + 1, y + 3], [x - 1, y + 3]];
-        // return [[x - 2, y], [x - 1, y - 3], [x + 1, y - 3]];
     }
 }
 
@@ -123,7 +122,7 @@ describe("ApprovalTests", () => {
     test("Test second neighbors", () => {
         const center: [number, number] = [3, 5];
         const neighbors = GameOfLifeBoard.getSecondNeighbors(center);
-        // neighbors.push(center)
+        neighbors.push(center)
         let board = new GameOfLifeBoard(...neighbors);
         verify(board);
     });
