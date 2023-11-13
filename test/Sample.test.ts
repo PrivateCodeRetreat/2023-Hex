@@ -75,12 +75,23 @@ class GameOfLifeBoard {
     }
 
     private isCellAlive(cell: [number, number]) {
-        return this.cells.toString().includes(cell.toString());
+        const formattedString: string = this.cells
+            .map(obj => `(${obj})`)
+            .reduce((acc, currentString) => acc + ',' + currentString, '');
+        console.log("cell toString(): " + formattedString);
+
+        return formattedString.includes(`(${cell})`);
     }
 
     static getNearNeighbors(center: number[]): [number, number][] {
         let [x, y] = center;
         return [[x - 1, y - 1], [x, y - 2], [x + 1, y - 1], [x + 1, y + 1], [x, y + 2], [x - 1, y + 1]];
+    }
+
+    static getSecondNeighbors(center: number[]):  [number, number][] {
+        let [x, y] = center;
+        return [[x - 2, y], [x - 1, y - 3], [x + 1, y - 3], [x + 2, y], [x + 1, y + 3], [x - 1, y + 3]];
+        // return [[x - 2, y], [x - 1, y - 3], [x + 1, y - 3]];
     }
 }
 
@@ -105,6 +116,14 @@ describe("ApprovalTests", () => {
     test("Test near neighbors", () => {
         const center = [3, 5];
         const neighbors = GameOfLifeBoard.getNearNeighbors(center); // cells: [number, number][];
+        let board = new GameOfLifeBoard(...neighbors);
+        verify(board);
+    });
+
+    test("Test second neighbors", () => {
+        const center: [number, number] = [3, 5];
+        const neighbors = GameOfLifeBoard.getSecondNeighbors(center);
+        // neighbors.push(center)
         let board = new GameOfLifeBoard(...neighbors);
         verify(board);
     });
