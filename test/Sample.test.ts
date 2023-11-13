@@ -75,12 +75,7 @@ class GameOfLifeBoard {
     }
 
     private isCellAlive(cell: [number, number]) {
-        const formattedString: string = this.cells
-            .map(obj => `(${obj})`)
-            .reduce((acc, currentString) => acc + ',' + currentString, '');
-        console.log("cell toString(): " + formattedString);
-
-        return formattedString.includes(`(${cell})`);
+        return this.cells.some(c => c[0] == cell[0] && c[1] == cell[1]);
     }
 
     static getNearNeighbors(center: number[]): [number, number][] {
@@ -104,7 +99,6 @@ describe("ApprovalTests", () => {
     test("Testing coordinates", () => {
 
         verify(new GameOfLifeBoard([1, 1], [2, 2], [3, 5], [4, 6]));
-        // verify(new GameOfLifeBoard([2, 2], [3, 5], [4, 6]));
     });
 
     test("Test board with numbers", () => {
@@ -114,7 +108,7 @@ describe("ApprovalTests", () => {
 
     test("Test near neighbors", () => {
         const center = [3, 5];
-        const neighbors = GameOfLifeBoard.getNearNeighbors(center); // cells: [number, number][];
+        const neighbors = GameOfLifeBoard.getNearNeighbors(center);
         let board = new GameOfLifeBoard(...neighbors);
         verify(board);
     });
